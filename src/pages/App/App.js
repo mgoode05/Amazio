@@ -17,6 +17,16 @@ class App extends Component {
     }
   }
 
+  addItem=(props) =>{
+    console.log(this)
+    fetch('/products', {
+      method: 'POST',
+      headers: {'content-Type': 'application/json'},
+      body: JSON.stringify({ product: this})
+    })
+    console.log('added item')
+  }
+
   componentDidMount() {
     fetch('/products').then(res => res.json())
     .then(products => {
@@ -31,7 +41,7 @@ class App extends Component {
           <NavBar />
         </header>
         <Switch>
-          <Route exact path='/' render ={() => <Catalog products={this.state.products}/>} />
+          <Route exact path='/' render ={() => <Catalog products={this.state.products} addItem={this.addItem}/>} />
           <Route path='/checkout' render={() => <Checkout /> }/>
           <Route path='/confirmation' render={() => <Confirmation /> } />
         </Switch>
